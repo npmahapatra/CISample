@@ -6,9 +6,9 @@ pipeline {
         label 'BuildAgent' 
         }
     triggers
-   {
+    {
     //Any trigger
-   }
+    }
     stages {
         stage('Clean') {
             steps {
@@ -58,8 +58,7 @@ Check console output at $BUILD_URL to view the results.''', recipientProviders: 
             {
                 publishHTML(target: [reportName: 'Site', reportDir: 'target/site', reportFiles: 'index.html', keepAll: false])
             }
-        }
-     } 
+        } 
         stage('Deploy to Build Agent') {
             steps {
                 echo "Undeploy and redeploy ... Deploying to Build Agent ........ ${buildserver}"
