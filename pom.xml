@@ -3,19 +3,16 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	
-  <groupId>com.mycompany.app</groupId>
+	<groupId>com.mycompany.app</groupId>
 	<artifactId>my-app</artifactId>
 	<packaging>war</packaging>
 	<version>1.0-NMSample</version>
 	<name>my-app</name>
 	<url>http://maven.apache.org</url>
-	
-  <properties>
-    <server></server>
-  </properties>
-  
-  <dependencies>
+	<properties>
+		<server></server>
+	</properties>
+	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -49,7 +46,7 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.6</version>
 				<configuration>
-				<failOnMissingWebXml>false</failOnMissingWebXml>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
@@ -79,6 +76,26 @@
 				<artifactId>maven-surefire-report-plugin</artifactId>
 				<version>2.22.0</version>
 			</plugin>
-		</plugins>
-	</reporting>
-</project>
+			<!--Can be used in future for sonarqube and jacoco reporting
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.5</version>
+			</plugin>
+			<plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>3.6.0.1398</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.1.1</version>
+				<configuration>
+					<show>private</show>
+					<failOnError>false</failOnError>
+				</configuration></plugin>
+	        -->
+			</plugins>
+		</reporting>
+	</project>

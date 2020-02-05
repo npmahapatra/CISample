@@ -5,17 +5,27 @@ pipeline {
     agent {
         label 'BuildAgent' 
         }
+    triggers
+   {
+    // MINUTE HOUR DOM MONTH DOW - Run every minute to check for changes
+    pollSCM(* * * * *')
+   }
     stages {
-        stage('Compile and package') {
+        stage('Clean') {
+            steps {
+                echo "Clean .........."
+                sh 'mvn clean'
+            }
+        } 
+        stage('Build') {
             steps {
                 echo "clean, compile and package .........."
-                sh 'mvn -B -DskipTests clean package'
+                sh 'mvn compile'
             }
         } 
         stage('Run Unit Tests') {
                 steps {
-                    sh 'mvn test'
-                    sh 'mvn site'
+                    sh 'mvn resources:testResources compiler:testCompile surefire:test'
                 }
                 post {
                     always {
@@ -30,11 +40,32 @@ Check console output at $BUILD_URL to view the results.''', recipientProviders: 
                     }
             }
         }
+        stage('Package') {
+            steps {
+                echo "Package .........."
+                sh 'mvn -B -DskipTests package'
+            }
+        }
+        
+        stage('Generate Documentation/Reporting') {
+            steps {
+                echo "Generating documentation .........."
+                sh 'mvn site'
+            }
+        }
+        post
+        {
+            always
+            {
+                publishHTML(target: [reportName: 'Site', reportDir: 'target/site', reportFiles: 'index.html', keepAll: false])
+            }
+        }
+     } 
         stage('Deploy to Build Agent') {
             steps {
                 echo "Undeploy and redeploy ... Deploying to Build Agent ........ ${buildserver}"
-                sh """ mvn clean tomcat7:undeploy -Dservername="${buildserver}" """
-                sh """ mvn tomcat7:deploy -Dservername="${buildserver}" """
+                sh """ mvn tomcat7:undeploy-only -Dservername="${buildserver}" """
+                sh """ mvn tomcat7:deploy-only -Dservername="${buildserver}" """
             }
             post {
                 failure {
@@ -68,8 +99,8 @@ Check console output at $BUILD_URL to view the results.''', recipientProviders: 
         stage('Deploy to Deployment Server') {
             steps {
                 echo "Undeploy and redeploy..... Deploying to Deployment server ...... ${deployserver}"
-                sh """ mvn clean tomcat7:undeploy -Dservername="${deployserver}" """
-                sh """ mvn tomcat7:deploy -Dservername="${deployserver}" """
+                sh """ mvn tomcat7:undeploy-only -Dservername="${deployserver}" """
+                sh """ mvn tomcat7:deploy-only -Dservername="${deployserver}" """
             }
             post {
                 failure {
