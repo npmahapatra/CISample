@@ -8,7 +8,7 @@ pipeline {
     triggers
    {
     // MINUTE HOUR DOM MONTH DOW - Run every minute to check for changes
-    pollSCM(* * * * *')
+    pollSCM(* * * * *)
    }
     stages {
         stage('Clean') {
