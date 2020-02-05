@@ -53,13 +53,13 @@ Check console output at $BUILD_URL to view the results.''', recipientProviders: 
                             echo "Website is UP - response 200 OK"
                         else 
                             echo "Website is DOWN"
-                            currentBuild.result='FAILURE'
+                            error "failed"
                             exit 1
                              
                         fi
                         '''
                     } catch(all) {
-                        currentBuild.result='FAILURE'
+                        error "failed"
                     }
                 }
                 //Run some other integration tests here
@@ -89,12 +89,12 @@ Check console output at $BUILD_URL to view the results.''', recipientProviders: 
                             echo "Website is UP - response 200 OK"
                         else 
                             echo "Website is DOWN"
-                            currentBuild.result='FAILURE'
+                            error "failed"
                             exit 1 
                         fi
                         '''
                     } catch(all) {
-                        currentBuild.result='FAILURE'
+                        error "failed"
                     }
                 }
                 echo "Run Load tests here...."
