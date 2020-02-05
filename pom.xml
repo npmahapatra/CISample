@@ -45,12 +45,10 @@
 				<version>3.0.0</version>
 			</plugin>
 			<plugin>
-				<!-- Build an executable JAR -->
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.1.1</version>
 				<configuration>
-         <failOnMissingWebXml>false</failOnMissingWebXml>
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
@@ -69,7 +67,6 @@
 					<path>/mytestapp</path>
 					<username>admin</username>
 					<password>admin_password</password>
-          <ignorePackaging>true</ignorePackaging>
 				</configuration>
 			</plugin>
 		</plugins>
