@@ -59,7 +59,7 @@ Check console output at $BUILD_URL to view the results.''', recipientProviders: 
                         fi
                         '''
                     } catch(all) {
-                        error "failed"
+                        echo "Error message: ${env.FAILED_MESSAGE}"
                     }
                 }
                 //Run some other integration tests here
@@ -94,7 +94,7 @@ Check console output at $BUILD_URL to view the results.''', recipientProviders: 
                         fi
                         '''
                     } catch(all) {
-                        error "failed"
+                        echo "Error message: ${env.FAILED_MESSAGE}"
                     }
                 }
                 echo "Run Load tests here...."
