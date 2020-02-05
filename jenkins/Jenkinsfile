@@ -53,13 +53,12 @@ Check console output at $BUILD_URL to view the results.''', recipientProviders: 
                             echo "Website is UP - response 200 OK"
                         else 
                             echo "Website is DOWN"
-                            error "failed"
                             exit 1
                              
                         fi
                         '''
                     } catch(all) {
-                        echo "Error message: ${env.FAILED_MESSAGE}"
+                        error "failed"
                     }
                 }
                 //Run some other integration tests here
@@ -89,12 +88,11 @@ Check console output at $BUILD_URL to view the results.''', recipientProviders: 
                             echo "Website is UP - response 200 OK"
                         else 
                             echo "Website is DOWN"
-                            error "failed"
                             exit 1 
                         fi
                         '''
                     } catch(all) {
-                        echo "Error message: ${env.FAILED_MESSAGE}"
+                        error "failed"
                     }
                 }
                 echo "Run Load tests here...."
