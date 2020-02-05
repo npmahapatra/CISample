@@ -68,8 +68,8 @@ Check console output at $BUILD_URL to view the results.''', recipientProviders: 
         stage('Deploy to Deployment Server') {
             steps {
                 echo "Undeploy and redeploy..... Deploying to Deployment server ...... ${deployserver}"
-                sh """ mvn clean tomcat7:undeploy -Dservername="${buildserver}" """
-                sh """ mvn tomcat7:deploy -Dservername="${buildserver}" """
+                sh """ mvn clean tomcat7:undeploy -Dservername="${deployserver}" """
+                sh """ mvn tomcat7:deploy -Dservername="${deployserver}" """
             }
             post {
                 failure {
