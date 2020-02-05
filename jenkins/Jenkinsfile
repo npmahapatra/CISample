@@ -32,7 +32,8 @@ Check console output at $BUILD_URL to view the results.''', recipientProviders: 
         }
         stage('Deploy to Build Agent') {
             steps {
-                echo "Deploying to Build Agent ........ ${buildserver}"
+                echo "Undeploy and redeploy ... Deploying to Build Agent ........ ${buildserver}"
+                sh """ mvn clean tomcat7:undeploy -Dservername="${buildserver}" """
                 sh """ mvn tomcat7:deploy -Dservername="${buildserver}" """
             }
             post {
@@ -52,7 +53,9 @@ Check console output at $BUILD_URL to view the results.''', recipientProviders: 
                             echo "Website is UP - response 200 OK"
                         else 
                             echo "Website is DOWN"
-                            exit 1 
+                            currentBuild.result='FAILURE'
+                            exit 1
+                             
                         fi
                         '''
                     } catch(all) {
@@ -65,8 +68,9 @@ Check console output at $BUILD_URL to view the results.''', recipientProviders: 
 
         stage('Deploy to Deployment Server') {
             steps {
-                echo "Deploying to Deployment server ...... ${deployserver}"
-                sh """ mvn tomcat7:deploy -Dservername="${deployserver}" """
+                echo "Undeploy and redeploy..... Deploying to Deployment server ...... ${deployserver}"
+                sh """ mvn clean tomcat7:undeploy -Dservername="${buildserver}" """
+                sh """ mvn tomcat7:deploy -Dservername="${buildserver}" """
             }
             post {
                 failure {
@@ -85,6 +89,7 @@ Check console output at $BUILD_URL to view the results.''', recipientProviders: 
                             echo "Website is UP - response 200 OK"
                         else 
                             echo "Website is DOWN"
+                            currentBuild.result='FAILURE'
                             exit 1 
                         fi
                         '''
