@@ -5,10 +5,10 @@ pipeline {
     agent {
         label 'BuildAgent' 
         }
-    triggers
-    {
-    //Any trigger
-    }
+    //  triggers
+    //  {
+    //    Any trigger
+    //  }
     stages {
         stage('Clean') {
             steps {
@@ -51,12 +51,12 @@ Check console output at $BUILD_URL to view the results.''', recipientProviders: 
                 echo "Generating documentation .........."
                 sh 'mvn site'
             }
-        }
-        post
-        {
-            always
+            post
             {
+                always
+                {
                 publishHTML(target: [reportName: 'Site', reportDir: 'target/site', reportFiles: 'index.html', keepAll: false])
+                }
             }
         } 
         stage('Deploy to Build Agent') {
