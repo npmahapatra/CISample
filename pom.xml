@@ -55,6 +55,7 @@
 							<classpathPrefix>lib/</classpathPrefix>
 							<mainClass>com.mycompany.app.App</mainClass>
 						</manifest>
+						<webXml>.\src\main\webapp\web.xml</webXml> 
 					</archive>
 				</configuration>
 			</plugin>
