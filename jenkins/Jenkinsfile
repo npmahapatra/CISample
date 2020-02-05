@@ -61,9 +61,8 @@ Check console output at $BUILD_URL to view the results.''', recipientProviders: 
         } 
         stage('Deploy to Build Agent') {
             steps {
-                echo "Undeploy and redeploy ... Deploying to Build Agent ........ ${buildserver}"
-                sh """ mvn tomcat7:undeploy-only -Dservername="${buildserver}" """
-                sh """ mvn tomcat7:deploy-only -Dservername="${buildserver}" """
+                echo "Undeploy and deploy ... Deploying to Build Agent ........ ${buildserver}"
+                sh """ mvn tomcat7:redeploy-only -Dservername="${buildserver}" """
             }
             post {
                 failure {
@@ -97,8 +96,7 @@ Check console output at $BUILD_URL to view the results.''', recipientProviders: 
         stage('Deploy to Deployment Server') {
             steps {
                 echo "Undeploy and redeploy..... Deploying to Deployment server ...... ${deployserver}"
-                sh """ mvn tomcat7:undeploy-only -Dservername="${deployserver}" """
-                sh """ mvn tomcat7:deploy-only -Dservername="${deployserver}" """
+                sh """ mvn tomcat7:redeploy-only -Dservername="${deployserver}" """
             }
             post {
                 failure {
